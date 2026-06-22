@@ -4,7 +4,7 @@ name = "nlohmannjson"
 git_repo = "nlohmann/json"
 
 [recipes]
-"latest" = """"
+"latest" = """
 [project]
 name = "json"
 description = "JSON for Modern C++"

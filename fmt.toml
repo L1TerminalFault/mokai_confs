@@ -3,7 +3,8 @@ name = "fmt"
 
 git_repo = "fmtlib/fmt"
 
-mokai_toml = """"
+[recipes]
+"latest" = """"
 [project]
 name = "fmt"
 description = "A modern formatting library"

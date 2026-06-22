@@ -1,10 +1,10 @@
-[project]
+[package]
 name = "sfml"
 
-# INFO: Add `https://github.com/` while parsing
 git_repo = "sfml/sfml"
 
-mokai_toml = """"
+[recipes]
+"3.1.0" = """
 [project]
 name = "sfml"
 version = "3.1.0"
@@ -24,7 +24,6 @@ include_dirs = [
 type = "static_library"
 sources = ["**/SFML/Window/*.cpp", "**/SFML/Window/Unix/*.cpp"]
 include_dirs = ["include", "src","extlibs/headers/glad/include","extlibs/headers/vulkan"]
-
 depends_on = ["sfml-system"]
 system_libs = ["GL", "X11", "Xrandr", "Xi", "Xcursor", "udev", "pthread"]
 

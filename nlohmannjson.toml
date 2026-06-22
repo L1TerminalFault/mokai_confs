@@ -1,5 +1,5 @@
 [project]
-name = "json"
+name = "nlohmannjson"
 
 git_repo = "nlohmann/json"
 

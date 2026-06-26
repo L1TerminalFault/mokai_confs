@@ -1,0 +1,35 @@
+[project]
+name = "tracy"
+git_repo = "wolfpld/tracy"
+
+[recipes]
+"latest" = """
+[project]
+name = "tracy"
+version = "0.10.0"
+license = "BSD-3-Clause"
+description = "Real-time, nanosecond profile telemetry framework"
+homepage = "https://github.com/wolfpld/tracy"
+cpp_version = "c++11"
+
+[target.tracy]
+type = "static_library"
+sources = ["public/TracyClient.cpp"]
+include_dirs = ["public/tracy"]
+
+[[target.tracy.properties_if]]
+condition = "true"
+defines = ["TRACY_ENABLE"]
+
+[[target.tracy.system_libs_if]]
+condition = "os == linux"
+libs = ["pthread", "dl"]
+
+[[target.tracy.system_libs_if]]
+condition = "os == windows"
+libs = ["ws2_32", "dbghelp"]
+
+[exports]
+default_targets = ["tracy"]
+include_dirs = ["public"]
+"""

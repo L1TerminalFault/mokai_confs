@@ -1,0 +1,22 @@
+[project]
+name = "sol2"
+git_repo = "TheOverOrdinary/Sol2"
+
+[recipes]
+"latest" = """
+[project]
+name = "sol2"
+version = "3.3.0"
+license = "MIT"
+description = "C++ library binding to Lua with spectacular performance tools"
+homepage = "https://github.com/TheOverOrdinary/Sol2"
+cpp_version = "c++17"
+
+[target.sol2]
+type = "header_only"
+include_dirs = ["include"]
+
+[exports]
+default_targets = ["sol2"]
+include_dirs = ["include"]
+"""

@@ -1,0 +1,23 @@
+[project]
+name = "tinyobjloader"
+git_repo = "tinyobjloader/tinyobjloader"
+
+[recipes]
+"latest" = """
+[project]
+name = "tinyobjloader"
+version = "2.0.0-rc10"
+license = "MIT"
+description = "Tiny but robust Wavefront OBJ loader"
+homepage = "https://github.com/tinyobjloader/tinyobjloader"
+cpp_version = "c++11"
+
+[target.tinyobjloader]
+type = "static_library"
+sources = ["tiny_obj_loader.cc"]
+include_dirs = ["."]
+
+[exports]
+default_targets = ["tinyobjloader"]
+include_dirs = ["."]
+"""

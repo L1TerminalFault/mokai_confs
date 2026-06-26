@@ -1,0 +1,22 @@
+[project]
+name = "entt"
+git_repo = "skypjack/entt"
+
+[recipes]
+"latest" = """
+[project]
+name = "entt"
+version = "3.13.0"
+license = "MIT"
+description = "Fast and light header-only Entity Component System"
+homepage = "https://github.com/skypjack/entt"
+cpp_version = "c++17"
+
+[target.entt]
+type = "header_only"
+include_dirs = ["src"]
+
+[exports]
+default_targets = ["entt"]
+include_dirs = ["src"]
+"""

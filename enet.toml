@@ -1,0 +1,30 @@
+[project]
+name = "enet"
+git_repo = "lsalzman/enet"
+
+[recipes]
+"latest" = """
+[project]
+name = "enet"
+version = "1.3.17"
+license = "MIT"
+description = "Relatively thin, simple UDP networking library"
+homepage = "http://enet.bespin.org/"
+cpp_version = "c99"
+
+[target.enet]
+type = "static_library"
+sources = [
+    "callbacks.c", "compress.c", "host.c", "list.c",
+    "packet.c", "peer.c", "protocol.c", "unix.c", "win32.c"
+]
+include_dirs = ["include"]
+
+[[target.enet.system_libs_if]]
+condition = "os == windows"
+libs = ["ws2_32", "winmm"]
+
+[exports]
+default_targets = ["enet"]
+include_dirs = ["include"]
+"""

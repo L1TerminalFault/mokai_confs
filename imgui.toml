@@ -1,0 +1,52 @@
+[project]
+name = "imgui"
+git_repo = "ocornut/imgui"
+
+[recipes]
+"latest" = """
+[project]
+name = "imgui"
+version = "1.91.0"
+license = "MIT"
+description = "Bloat-free immediate mode graphical user interface for C++"
+homepage = "https://github.com/ocornut/imgui"
+cpp_version = "c++14"
+
+[options]
+IMGUI_WITH_GLFW = true
+IMGUI_WITH_VULKAN = true
+
+[target.imgui]
+type = "static_library"
+sources = [
+    "imgui.cpp",
+    "imgui_draw.cpp",
+    "imgui_tables.cpp",
+    "imgui_widgets.cpp",
+    "imgui_demo.cpp"
+]
+include_dirs = [".", "backends"]
+
+# --- Conditional Backend: GLFW ---
+[[target.imgui.sources_if]]
+condition = "options.IMGUI_WITH_GLFW == true"
+patterns = ["backends/imgui_impl_glfw.cpp"]
+
+[[target.imgui.properties_if]]
+condition = "options.IMGUI_WITH_GLFW == true"
+depends_on = ["glfw"]
+
+# --- Conditional Backend: Vulkan ---
+[[target.imgui.sources_if]]
+condition = "options.IMGUI_WITH_VULKAN == true"
+patterns = ["backends/imgui_impl_vulkan.cpp"]
+
+[[target.imgui.properties_if]]
+condition = "options.IMGUI_WITH_VULKAN == true"
+defines = ["IMGUI_IMPL_VULKAN_NO_PROTOTYPES"]
+depends_on = ["volk"]
+
+[exports]
+default_targets = ["imgui"]
+include_dirs = [".", "backends"]
+"""

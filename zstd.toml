@@ -1,0 +1,42 @@
+[project]
+name = "zstd"
+git_repo = "facebook/zstd"
+
+[recipes]
+"latest" = """
+[project]
+name = "zstd"
+version = "1.5.6"
+license = "BSD / GPLv2"
+description = "Fast real-time compression algorithm"
+homepage = "https://facebook.github.io/zstd/"
+cpp_version = "c99"
+
+[target.zstd]
+type = "static_library"
+sources = [
+    "lib/common/debug.c", "lib/common/entropy_common.c", "lib/common/error_private.c",
+    "lib/common/fse_decompress.c", "lib/common/pool.c", "lib/common/threading.c",
+    "lib/common/xxhash.c", "lib/common/zstd_common.c",
+    "lib/compress/fse_compress.c", "lib/compress/hist.c", "lib/compress/huf_compress.c",
+    "lib/compress/zstd_compress.c", "lib/compress/zstd_compress_literals.c",
+    "lib/compress/zstd_compress_sequences", "lib/compress/zstd_compress_superblock.c",
+    "lib/compress/zstd_double_fast.c", "lib/compress/zstd_fast.c", "lib/compress/zstd_lazy.c",
+    "lib/compress/zstd_ldm.c", "lib/compress/zstd_opt.c", "lib/compress/zstdmt_compress.c",
+    "lib/decompress/huf_decompress.c", "lib/decompress/zstd_ddict.c", "lib/decompress/zstd_decompress.c",
+    "lib/decompress/zstd_decompress_block.c"
+]
+include_dirs = ["lib", "lib/common", "lib/dictBuilder"]
+
+[[target.zstd.properties_if]]
+condition = "true"
+defines = ["ZSTD_MULTITHREAD"]
+
+[[target.zstd.system_libs_if]]
+condition = "os == linux"
+libs = ["pthread"]
+
+[exports]
+default_targets = ["zstd"]
+include_dirs = ["lib"]
+"""

@@ -1,0 +1,41 @@
+[project]
+name = "miniaudio"
+git_repo = "mackron/miniaudio"
+
+[recipes]
+"latest" = """
+[project]
+name = "miniaudio"
+version = "0.11.21"
+license = "Unlicense / MIT"
+description = "Single-header audio playback and capture library"
+homepage = "https://miniaud.io/"
+cpp_version = "c99"
+
+[options]
+MINIAUDIO_HEADER_ONLY = false
+
+[target.miniaudio]
+type = "static_library"
+sources = ["miniaudio.c"]
+include_dirs = ["."]
+
+# --- Linux Backend Requirements ---
+[[target.miniaudio.system_libs_if]]
+condition = "os == linux"
+libs = ["asound", "pulse", "pulse-simple", "pthread", "m", "dl", "rt"]
+
+# --- macOS Backend Frameworks ---
+[[target.miniaudio.flags_if]]
+condition = "os == macos"
+flags = ["-framework CoreAudio", "-framework AudioToolbox", "-framework CoreFoundation"]
+
+# --- Windows System Libraries ---
+[[target.miniaudio.system_libs_if]]
+condition = "os == windows"
+libs = ["user32", "ole32", "winmm"]
+
+[exports]
+default_targets = ["miniaudio"]
+include_dirs = ["."]
+"""

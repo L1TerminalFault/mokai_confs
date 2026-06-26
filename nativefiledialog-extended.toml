@@ -1,0 +1,54 @@
+[project]
+name = "nativefiledialog-extended"
+git_repo = "btzy/nativefiledialog-extended"
+
+[recipes]
+"latest" = """
+[project]
+name = "nfd"
+version = "1.2.1"
+license = "Zlib"
+description = "A small C/C++ library that uniquely opens native file dialogs"
+homepage = "https://github.com/btzy/nativefiledialog-extended"
+cpp_version = "c++17"
+
+[target.nfd]
+type = "static_library"
+sources = ["src/nfd_common.c"]
+include_dirs = ["src/include"]
+
+# --- Windows implementation ---
+[[target.nfd.sources_if]]
+condition = "os == windows"
+patterns = ["src/nfd_win.cpp"]
+
+[[target.nfd.system_libs_if]]
+condition = "os == windows"
+libs = ["ole32", "uuid", "shlwapi"]
+
+# --- Linux implementation (GTK3 backend) ---
+[[target.nfd.sources_if]]
+condition = "os == linux"
+patterns = ["src/nfd_gtk.c"]
+
+[[target.nfd.flags_if]]
+condition = "os == linux"
+flags = ["`pkg-config --cflags gtk+-3.0`"]
+
+[[target.nfd.system_libs_if]]
+condition = "os == linux"
+libs = ["gtk-3", "gobject-2.0", "glib-2.0"]
+
+# --- macOS implementation ---
+[[target.nfd.sources_if]]
+condition = "os == macos"
+patterns = ["src/nfd_cocoa.m"]
+
+[[target.nfd.flags_if]]
+condition = "os == macos"
+flags = ["-framework AppKit", -framework UniformTypeIdentifiers]
+
+[exports]
+default_targets = ["nfd"]
+include_dirs = ["src/include"]
+"""

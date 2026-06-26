@@ -1,0 +1,23 @@
+[project]
+name = "spirv-reflect"
+git_repo = "KhronosGroup/SPIRV-Reflect"
+
+[recipes]
+"latest" = """
+[project]
+name = "spirv-reflect"
+version = "master"
+license = "Apache-2.0"
+description = "Lightweight reflection library for SPIR-V shader bytecode"
+homepage = "https://github.com/KhronosGroup/SPIRV-Reflect"
+cpp_version = "c99"
+
+[target.spirv-reflect]
+type = "static_library"
+sources = ["spirv_reflect.c"]
+include_dirs = ["."]
+
+[exports]
+default_targets = ["spirv-reflect"]
+include_dirs = ["."]
+"""

@@ -1,0 +1,22 @@
+[project]
+name = "vulkan-memory-allocator"
+git_repo = "GPUOpen-Libraries-And-SDKs/VulkanMemoryAllocator"
+
+[recipes]
+"latest" = """
+[project]
+name = "vma"
+version = "3.1.0"
+license = "MIT"
+description = "Easy to integrate Vulkan memory allocation library"
+homepage = "https://github.com/GPUOpen-Libraries-And-SDKs/VulkanMemoryAllocator"
+cpp_version = "c++14"
+
+[target.vma]
+type = "header_only"
+include_dirs = ["include"]
+
+[exports]
+default_targets = ["vma"]
+include_dirs = ["include"]
+"""

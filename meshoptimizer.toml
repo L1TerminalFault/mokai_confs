@@ -1,0 +1,36 @@
+[project]
+name = "meshoptimizer"
+git_repo = "zeux/meshoptimizer"
+
+[recipes]
+"latest" = """
+[project]
+name = "meshoptimizer"
+version = "0.21"
+license = "MIT"
+description = "Mesh optimization library that makes meshes smaller and faster to render"
+homepage = "https://github.com/zeux/meshoptimizer"
+cpp_version = "c++11"
+
+[target.meshoptimizer]
+type = "static_library"
+sources = [
+    "src/allocator.cpp",
+    "src/clusterizer.cpp",
+    "src/indexcodec.cpp",
+    "src/indexgenerator.cpp",
+    "src/overdraw.cpp",
+    "src/simplifier.cpp",
+    "src/spatialorder.cpp",
+    "src/stripifier.cpp",
+    "src/vcacheanalyzer.cpp",
+    "src/vcacheoptimizer.cpp",
+    "src/vertexcodec.cpp",
+    "src/vertexfilter.cpp"
+]
+include_dirs = ["src"]
+
+[exports]
+default_targets = ["meshoptimizer"]
+include_dirs = ["src"]
+"""

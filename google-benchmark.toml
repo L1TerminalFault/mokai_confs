@@ -1,0 +1,42 @@
+[project]
+name = "google-benchmark"
+git_repo = "google/benchmark"
+
+[recipes]
+"latest" = """
+[project]
+name = "benchmark"
+version = "1.8.4"
+license = "Apache-2.0"
+description = "A microbenchmark support library"
+homepage = "https://github.com/google/benchmark"
+cpp_version = "c++14"
+
+[target.benchmark]
+type = "static_library"
+sources = [
+    "src/benchmark.cc", "src/benchmark_api_internal.cc", "src/benchmark_name.cc",
+    "src/benchmark_register.cc", "src/benchmark_runner.cc", "src/colorprint.cc",
+    "src/commandlineflags.cc", "src/complexity.cc", "src/console_reporter.cc",
+    "src/counter.cc", "src/csv_reporter.cc", "src/json_reporter.cc",
+    "src/perf_counters.cc", "src/reporter.cc", "src/statistics.cc",
+    "src/string_util.cc", "src/sysinfo.cc", "src/timers.cc"
+]
+include_dirs = ["include", "src"]
+
+[[target.benchmark.properties_if]]
+condition = "true"
+defines = ["BENCHMARK_STATIC_DEFINE"]
+
+[[target.benchmark.system_libs_if]]
+condition = "os == linux"
+libs = ["pthread", "rt"]
+
+[[target.benchmark.system_libs_if]]
+condition = "os == windows"
+libs = ["shlwapi"]
+
+[exports]
+default_targets = ["benchmark"]
+include_dirs = ["include"]
+"""

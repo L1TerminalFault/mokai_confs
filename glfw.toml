@@ -1,0 +1,134 @@
+[project]
+name = "glfw"
+git_repo = "glfw/glfw"
+
+[recipes]
+"latest" = """
+[project]
+name = "glfw"
+version = "3.5.0"
+license = "zlib/libpng"
+description = "Multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input"
+homepage = "https://www.glfw.org/"
+cpp_version = "c99"
+
+[options]
+GLFW_BUILD_X11 = true
+GLFW_BUILD_WAYLAND = false
+GLFW_BUILD_WIN32 = true
+GLFW_BUILD_COCOA = true
+
+[target.glfw]
+type = "static_library"
+sources = [
+    "src/context.c",
+    "src/init.c",
+    "src/input.c",
+    "src/monitor.c",
+    "src/platform.c",
+    "src/vulkan.c",
+    "src/window.c",
+    "src/egl_context.c",
+    "src/osmesa_context.c",
+    "src/null_init.c",
+    "src/null_monitor.c",
+    "src/null_window.c",
+    "src/null_joystick.c"
+]
+include_dirs = ["include", "src"]
+
+# --- Windows backend ---
+[[target.glfw.sources_if]]
+condition = "os == windows"
+patterns = [
+    "src/win32_init.c",
+    "src/win32_module.c",
+    "src/win32_monitor.c",
+    "src/win32_window.c",
+    "src/win32_joystick.c",
+    "src/win32_time.c",
+    "src/win32_thread.c",
+    "src/wgl_context.c",
+    "src/direct_context.c"
+]
+
+[[target.glfw.properties_if]]
+condition = "os == windows && options.GLFW_BUILD_WIN32"
+defines = ["_GLFW_WIN32"]
+
+[[target.glfw.system_libs_if]]
+condition = "os == windows && options.GLFW_BUILD_WIN32"
+libs = ["gdi32", "user32", "shell32"]
+
+# --- Linux backend (X11) ---
+[[target.glfw.sources_if]]
+condition = "os == linux"
+patterns = [
+    "src/x11_init.c",
+    "src/x11_monitor.c",
+    "src/x11_window.c",
+    "src/xkb_unicode.c",
+    "src/posix_module.c",
+    "src/posix_time.c",
+    "src/posix_thread.c",
+    "src/posix_poll.c",
+    "src/glx_context.c",
+    "src/linux_joystick.c"
+]
+
+[[target.glfw.properties_if]]
+condition = "os == linux && options.GLFW_BUILD_X11"
+defines = ["_GLFW_X11", "_POSIX_C_SOURCE=200809L"]
+
+[[target.glfw.system_libs_if]]
+condition = "os == linux && options.GLFW_BUILD_X11"
+libs = ["X11", "pthread", "dl", "rt", "m"]
+
+# --- Linux backend (Wayland) ---
+[[target.glfw.sources_if]]
+condition = "os == linux"
+patterns = [
+    "src/wl_init.c",
+    "src/wl_monitor.c",
+    "src/wl_window.c",
+    "src/wl_platform.c",
+    "src/posix_time.c",
+    "src/posix_thread.c",
+    "src/posix_poll.c",
+    "src/linux_joystick.c"
+]
+
+[[target.glfw.properties_if]]
+condition = "os == linux && options.GLFW_BUILD_WAYLAND"
+defines = ["_GLFW_WAYLAND", "_POSIX_C_SOURCE=200809L"]
+
+[[target.glfw.system_libs_if]]
+condition = "os == linux && options.GLFW_BUILD_WAYLAND"
+libs = ["wayland-client", "wayland-egl", "xkbcommon", "pthread", "dl", "rt", "m"]
+
+# --- macOS backend (Cocoa) ---
+[[target.glfw.sources_if]]
+condition = "os == macos"
+patterns = [
+    "src/cocoa_init.m",
+    "src/cocoa_monitor.m",
+    "src/cocoa_window.m",
+    "src/cocoa_joystick.m",
+    "src/posix_thread.c",
+    "src/posix_module.c",
+    "src/posix_time.c",
+    "src/nsgl_context.m"
+]
+
+[[target.glfw.properties_if]]
+condition = "os == macos && options.GLFW_BUILD_COCOA"
+defines = ["_GLFW_COCOA"]
+
+[[target.glfw.flags_if]]
+condition = "os == macos && options.GLFW_BUILD_COCOA"
+flags = ["-framework Cocoa", "-framework IOKit", "-framework CoreFoundation", "-framework CoreVideo"]
+
+[exports]
+default_targets = ["glfw"]
+include_dirs = ["include"]
+"""

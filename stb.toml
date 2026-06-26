@@ -1,0 +1,27 @@
+[project]
+name = "stb"
+git_repo = "nothings/stb"
+
+[recipes]
+"latest" = """
+[project]
+name = "stb"
+version = "master"
+license = "Public Domain / MIT"
+description = "Single-file public domain libraries for C/C++"
+homepage = "https://github.com/nothings/stb"
+cpp_version = "c99"
+
+[target.stb]
+type = "header_only"
+include_dirs = ["."]
+
+# Ensure basic math routines link correctly on Unix environments if implementations are generated
+[[target.stb.system_libs_if]]
+condition = "os == linux"
+libs = ["m"]
+
+[exports]
+default_targets = ["stb"]
+include_dirs = ["."]
+"""

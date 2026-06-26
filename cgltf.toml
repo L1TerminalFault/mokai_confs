@@ -1,0 +1,22 @@
+[project]
+name = "cgltf"
+git_repo = "jkuhlmann/cgltf"
+
+[recipes]
+"latest" = """
+[project]
+name = "cgltf"
+version = "1.14"
+license = "MIT"
+description = "Single-file glTF 2.0 parser written in C99"
+homepage = "https://github.com/jkuhlmann/cgltf"
+cpp_version = "c99"
+
+[target.cgltf]
+type = "header_only"
+include_dirs = ["."]
+
+[exports]
+default_targets = ["cgltf"]
+include_dirs = ["."]
+"""
